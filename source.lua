@@ -219,7 +219,7 @@ pcall(function()
 
 	print("waiting")
 	if #game.Players:GetPlayers() >= 12 then
-		for Index = 1, 60 do
+		for Index = 1, 80 do
 			task.wait(1)
 			print(LocalPlayer)
 		end
