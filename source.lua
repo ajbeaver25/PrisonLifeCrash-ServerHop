@@ -179,17 +179,17 @@ task.spawn(function()
 
     print(#america)
 
-    while task.wait(.3) do
+    while task.wait(.1) do
         pcall(function()
             local new = LocalPlayer.Backpack:FindFirstChild("Remington 870") or LocalPlayer.Character:FindFirstChild("Remington 870")
             if not new then
                 Gun("Remington 870")
                 new = LocalPlayer.Backpack:FindFirstChild("Remington 870")
             end
-            for i = 1, 350 do
+            for i = 1, 400 do
                 Rstorage.ShootEvent:FireServer(america, new)
             end
-            task.wait(0.5)
+            task.wait(0.25)
         end)
     end
 end)
