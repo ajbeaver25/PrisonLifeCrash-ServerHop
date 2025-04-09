@@ -1,5 +1,3 @@
-local ChatMessages = {"THIS SERVER HAS BEEN COMPROMISED BY THE 7TH BATTALION", "WE OWN PRISON LIFE AND ALL OF ITS PLAYERS", "YOU ARE EXPENDABLE"}
-
 local Camera = game:GetService("Workspace").CurrentCamera
 local Rstorage = game:GetService("ReplicatedStorage")
 local Rservice = game:GetService("RunService")
@@ -14,6 +12,8 @@ local RegModule = nil
 local SavedPositions = {};
 local HttpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 
+local ChatMessages = {"THIS SERVER HAS BEEN COMPROMISED BY THE 7TH BATTALION", "WE OWN PRISON LIFE AND ALL OF ITS PLAYERS", "YOU ARE EXPENDABLE"}
+	
 task.wait(1)
 
 for Index, Message in pairs(ChatMessages) do
