@@ -186,16 +186,18 @@ task.spawn(function()
                 Gun("Remington 870")
                 new = LocalPlayer.Backpack:FindFirstChild("Remington 870")
             end
-            for i = 1, 225 do
+            for i = 1, 350 do
                 Rstorage.ShootEvent:FireServer(america, new)
             end
-            task.wait(1)
+            task.wait(0.5)
         end)
     end
 end)
 
 print("waiting")
-task.wait(60)
+if #game.Players:GetPlayers() >= 12 then
+	task.wait(80)
+end	
 
 warn("SERVER HOPPING")
 while true do
