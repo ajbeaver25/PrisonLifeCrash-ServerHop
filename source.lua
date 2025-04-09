@@ -189,7 +189,7 @@ task.spawn(function()
 end)
 
 print("waiting")
-task.wait(80)
+task.wait(60)
 
 warn("SERVER HOPPING")
 while true do
