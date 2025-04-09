@@ -219,7 +219,7 @@ pcall(function()
 
 	print("waiting")
 	if #game.Players:GetPlayers() >= 12 then
-		task.wait(70)
+		task.wait(80)
 	end
 end)
 
