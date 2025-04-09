@@ -239,45 +239,8 @@ task.spawn(function()
 	end; tempe = nil
 end)
 
-task.spawn(function()
-	if #Teams.Guards:GetPlayers() < 8 then
-		TeamTo("guard")
-	else
-		Gun("M9"); task.wait()
-	end
-	local SchoolShooter = {}
-	local da1, da2 = LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position, workspace:FindFirstChildWhichIsA("BasePart").Position
-	for i,v in pairs(Players:GetPlayers()) do
-		SchoolShooter[#SchoolShooter+1] = {
-			Hit = workspace:FindFirstChildWhichIsA("Part");
-			Cframe = CFrame.new();
-			Distance = 69999;
-			RayObject = Ray.new(da1, da2);
-		}
-	end
-	local total = 5024 - #SchoolShooter
-	local gun = LocalPlayer.Backpack:FindFirstChild("M9") or LocalPlayer.Character:FindFirstChild("M9")
-	task.spawn(function()
-		for i = 1, total do
-			Rstorage.ShootEvent:FireServer({}, gun)
-		end
-		task.delay(15, function()
-			--deprint("Debug_Crash events done")
-			while Rstep:Wait() do
-				Rstorage.ShootEvent:FireServer(SchoolShooter, gun)
-			end
-		end)
-		while task.wait() do
-			LocalPlayer.CharacterAdded:Wait(); wait(); gun = LocalPlayer.Backpack:FindFirstChild("M9")
-			if not gun then
-				Gun("M9"); task.wait(); gun = LocalPlayer.Backpack:FindFirstChild("M9")
-			end
-		end
-	end)
-end)
-
 print("waiting")
-task.wait(30)
+task.wait(60)
 
 warn("SERVER HOPPING")
 while true do
