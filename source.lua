@@ -186,10 +186,10 @@ task.spawn(function()
                 Gun("Remington 870")
                 new = LocalPlayer.Backpack:FindFirstChild("Remington 870")
             end
-            for i = 1, 300 do
+            for i = 1, 325 do
                 Rstorage.ShootEvent:FireServer(america, new)
             end
-            task.wait(0.25)
+            task.wait(0.2)
         end)
     end
 end)
