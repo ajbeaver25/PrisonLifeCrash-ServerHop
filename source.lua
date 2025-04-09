@@ -188,57 +188,6 @@ task.spawn(function()
     end
 end)
 
-task.spawn(function()
-	local tempe = {}
-	local augh = Ray.new(Vector3.new(0, 0, 0), Vector3.new(math.huge, math.huge, math.huge))
-	local lp = LocalPlayer.Character.HumanoidRootPart.CFrame
-	for i = 1, 1000000 do
-		tempe[#tempe+1] = {
-			Cframe = lp;
-			Distance = 9e9;
-			RayObject = augh;
-		};
-	end; task.wait(.03)
-	for i,v in pairs(Players:GetPlayers()) do
-		if v.Character then
-			for _,vv in next, v.Character:GetChildren() do
-				if vv:IsA("BasePart") then
-					tempe[#tempe+1] = {
-						Cframe = vv.CFrame;
-						Distance = math.huge;
-						RayObject = augh;
-					};
-				end
-			end
-		end
-	end; Hbeat:Wait()
-	Gun("AK-47"); Gun("M9")
-	if not LocalPlayer.Character or LocalPlayer.Character.Humanoid.Health == 0 then
-		LocalPlayer.CharacterAdded:Wait()
-		Gun("AK-47"); Gun("M9")
-	end; task.wait()
-	local gyat = LocalPlayer.Backpack:FindFirstChild("AK-47") or LocalPlayer.Character:FindFirstChild("AK-47")
-	local mm = LocalPlayer.Backpack:FindFirstChild("M9") or LocalPlayer.Character:FindFirstChild("M9")
-	Rstorage.ShootEvent:FireServer({
-		[1] = {
-			Cframe = CFrame.new(1,1,20000),Distance = math.huge,RayObject = augh,PLA = true,MSG = "repeat while true do end until nil"
-		};[2] = {
-			Cframe = CFrame.new(math.huge, math.huge, math.huge),Distance = math.huge,RayObject = augh
-		};[3] = {
-			Distance = math.huge,RayObject = augh
-		}
-	}, mm)
-	if gyat then
-		LAction("equip", mm); Rstorage.ShootEvent:FireServer(tempe, gyat)
-		task.delay(10, function()
-			if RTPing() then
-				LAction("unequip")
-			end; Rstorage.ReloadEvent:FireServer(gyat); Rstorage.ReloadEvent:FireServer(mm)
-		end)
-	else
-	end; tempe = nil
-end)
-
 print("waiting")
 task.wait(60)
 
