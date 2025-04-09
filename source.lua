@@ -177,7 +177,7 @@ task.spawn(function()
 		end
 	end
 
-    print(#america)
+    print(`{#america} Players in server`)
 
     while task.wait(.1) do
         pcall(function()
