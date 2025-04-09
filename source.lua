@@ -17,6 +17,10 @@ LocalPlayer.PlayerScripts.ClientGunReplicator.Enabled = false
 -- Auto Attach on Server hop
 queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 
+Players.LocalPlayer.OnTeleport:Connect(function(State)
+	queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ajbeaver25/PrisonLifeCrash-ServerHop/refs/heads/main/source.lua'))()")
+end)
+
 local SaveCamPos = function()
 	SavedPositions.OldCameraPos = Camera.CFrame
 end
