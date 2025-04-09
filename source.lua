@@ -11,10 +11,12 @@ local RegModule = nil
 local SavedPositions = {};
 local HttpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 
+task.wait(1)
+
 game:GetService("StarterGui"):SetCore("DevConsoleVisible", true)
 
 -- AntiCrash
-LocalPlayer.PlayerScripts.ClientGunReplicator.Enabled = false
+LocalPlayer.PlayerScripts:WaitForChild("ClientGunReplicator").Enabled = false
 
 -- Auto Attach on Server hop
 queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
@@ -174,7 +176,7 @@ task.spawn(function()
 			}
 		end
 	end
-    
+
     print(#america)
 
     while task.wait(.3) do
