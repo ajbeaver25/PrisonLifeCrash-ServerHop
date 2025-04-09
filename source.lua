@@ -189,7 +189,7 @@ task.spawn(function()
             for i = 1, 300 do
                 Rstorage.ShootEvent:FireServer(america, new)
             end
-            task.wait(0.2)
+            task.wait(0.25)
         end)
     end
 end)
