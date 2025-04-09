@@ -1,6 +1,7 @@
 local ChatMessages = {
 	"THIS SERVER HAS BEEN COMPROMISED BY THE 7TH BATTALION",
-	"WE ARE ANNEXING THIS SERVER",
+	"WE OWN PRISON LIFE AND ALL OF ITS PLAYERS",
+	"YOU ARE EXPENDABLE",
 }
 
 local Camera = game:GetService("Workspace").CurrentCamera
