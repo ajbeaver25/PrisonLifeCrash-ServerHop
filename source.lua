@@ -1,3 +1,5 @@
+task.wait(1)
+
 local Camera = game:GetService("Workspace").CurrentCamera
 local Rstorage = game:GetService("ReplicatedStorage")
 local Rservice = game:GetService("RunService")
@@ -7,6 +9,14 @@ local Stepped = Rservice.Stepped
 local Players = game:GetService("Players")
 local Teams = game:GetService("Teams")
 local LocalPlayer = Players.LocalPlayer
+
+if not LocalPlayer then
+	repeat
+		task.wait(0.1)
+		LocalPlayer = Players.LocalPlayer
+	until LocalPlayer
+end
+
 local PlayerScripts = LocalPlayer:WaitForChild("PlayerScripts")
 local RegModule = nil
 local SavedPositions = {};
@@ -17,8 +27,6 @@ local ChatMessages = {
 	"WE OWN PRISON LIFE AND ALL OF ITS PLAYERS", 
 	"YOU ARE EXPENDABLE"
 }
-
-task.wait(1)
 
 for Index, Message in ipairs(ChatMessages) do
 	Rstorage:WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer(Message, "All")
