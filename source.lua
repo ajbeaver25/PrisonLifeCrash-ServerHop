@@ -173,7 +173,7 @@ task.spawn(function()
 		end
 	end
 
-    while task.wait(.4) do
+    while task.wait(.3) do
         pcall(function()
             local new = LocalPlayer.Backpack:FindFirstChild("Remington 870") or LocalPlayer.Character:FindFirstChild("Remington 870")
             if not new then
