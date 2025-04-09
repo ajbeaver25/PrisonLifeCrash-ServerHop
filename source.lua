@@ -20,7 +20,7 @@ local ChatMessages = {
 
 task.wait(1)
 
-for Index, Message in pairs(ChatMessages) do
+for Index, Message in ipairs(ChatMessages) do
 	Rstorage:WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer(Message, "All")
 	task.wait()
 end
