@@ -1,8 +1,4 @@
-local ChatMessages = {
-	"THIS SERVER HAS BEEN COMPROMISED BY THE 7TH BATTALION",
-	"WE OWN PRISON LIFE AND ALL OF ITS PLAYERS",
-	"YOU ARE EXPENDABLE",
-}
+local ChatMessages = {"THIS SERVER HAS BEEN COMPROMISED BY THE 7TH BATTALION", "WE OWN PRISON LIFE AND ALL OF ITS PLAYERS", "YOU ARE EXPENDABLE"}
 
 local Camera = game:GetService("Workspace").CurrentCamera
 local Rstorage = game:GetService("ReplicatedStorage")
