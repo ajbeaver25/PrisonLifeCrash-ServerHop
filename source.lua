@@ -11,6 +11,8 @@ local RegModule = nil
 local SavedPositions = {};
 local HttpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 
+game:GetService("StarterGui"):SetCore("DevConsoleVisible", true)
+
 -- AntiCrash
 LocalPlayer.PlayerScripts.ClientGunReplicator.Enabled = false
 
@@ -172,6 +174,8 @@ task.spawn(function()
 			}
 		end
 	end
+    
+    print(#america)
 
     while task.wait(.3) do
         pcall(function()
