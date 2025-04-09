@@ -25,6 +25,8 @@ for Index, Message in pairs(ChatMessages) do
 	task.wait()
 end
 
+task.wait(1.25)
+
 -- Auto Attach on Server hop
 queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 
