@@ -300,9 +300,7 @@ pcall(function()
 			task.spawn(Gun, "Remington 870")
 		end
 		Gun("M9")
-		if LocPL.Gamepass then
-			Gun("M4A1")
-		end; task.wait()
+		task.wait()
 	end
 	
 	local AllItems = function()
