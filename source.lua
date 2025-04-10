@@ -135,6 +135,118 @@ pcall(function()
 		return RoundTrip
 	end
 	
+	local SpawnClientStuff = function(arg)
+		if arg == "superknife" then
+			ItemHand(false, "Crude Knife")
+			local knife = LocalPlayer.Backpack:FindFirstChild("Crude Knife") or LocalPlayer.Character:FindFirstChild("Crude Knife")
+			local animate = Instance.new("Animation", knife)
+			animate.AnimationId = "rbxassetid://218504594"
+			local animtrack = LocalPlayer.Character:FindFirstChild("Humanoid"):LoadAnimation(animate)
+			local attacking = false
+			local inPutCon = game:GetService("UserInputService").InputBegan:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+					if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Crude Knife") then
+						if not attacking then
+							attacking = true
+							animtrack:Play()
+							for i,v in pairs(Players:GetPlayers()) do
+								if not (v == LocalPlayer) then
+									if v.Character and v.Character:FindFirstChild("Humanoid") then
+										if not (v.Character:FindFirstChild("Humanoid").Health == 0) then
+											local LPart, VPart = LocalPlayer.Character.PrimaryPart, v.Character.PrimaryPart
+											if LPart and VPart then
+												if (LPart.Position-VPart.Position).Magnitude <= 5 then
+													for i = 1, 15 do
+														MeleEve(v)
+													end
+												end
+											end
+										end
+									end
+								end
+							end
+							task.wait(.1)
+							attacking = false
+						end
+					end
+				end
+			end)
+			task.spawn(function()
+				LocalPlayer.CharacterAdded:Wait()
+				inPutCon:Disconnect(); animate:Destroy()
+				animate = nil; animtrack = nil; inPutCon = nil
+			end)
+		elseif arg == "bat" then
+			local tool = Instance.new("Tool", LocalPlayer.Backpack)
+			tool.GripPos = Vector3.new(0.1, -1, 0)
+			tool.Name = "Bat"
+			local handle = Instance.new("Part", tool)
+			handle.Name = "Handle"
+			handle.Size = Vector3.new(0.4, 4, 0.4)
+			local animate = Instance.new("Animation", tool)
+			animate.AnimationId = "rbxassetid://218504594"
+			local animtrack = LocalPlayer.Character.Humanoid:LoadAnimation(animate)
+			local attacking = false
+			local activate = tool.Activated:Connect(function()
+				if not attacking then
+					attacking = true
+					animtrack:Play()
+					task.wait(.1)
+					attacking = false
+				end
+			end)
+			local Touched = handle.Touched:Connect(function(part)
+				if attacking then
+					local human = part.Parent:FindFirstChild("Humanoid")
+					if human then
+						local plr = Players:FindFirstChild(part.Parent.Name)
+						if plr then
+							for i = 1, 10 do
+								MeleEve(plr)
+							end
+						end
+					end
+				end
+			end)
+			task.spawn(function()
+				LocalPlayer.CharacterAdded:Wait()
+				activate:Disconnect(); Touched:Disconnect()
+				handle:Destroy(); tool:Destroy(); animate:Destroy()
+				animtrack = nil; animate = nil; attacking = nil
+			end)
+		elseif arg == "clicktp" then
+			local newTool = Instance.new("Tool")
+			newTool.RequiresHandle = false
+			newTool.Name = "Click-TP"
+			newTool.Parent = LocalPlayer.Backpack
+			local tempocon = nil
+			tempocon = newTool.Activated:Connect(function()
+				local Get = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+				local Wi = LocalPlayer:GetMouse().Hit
+				local Fi = Wi.Position + Vector3.new(0, 2.5, 0)
+				local Anywhere = Fi-Get.Position
+				local YouGo = Get.CFrame + Anywhere
+				Get.CFrame = YouGo
+			end)
+			task.spawn(function()
+				LocalPlayer.CharacterAdded:Wait()
+				newTool:Destroy(); tempocon:Disconnect()
+				newTool = nil; tempocon = nil;
+			end)
+		elseif arg == "btools" then
+			local hammer = Instance.new("HopperBin", LocalPlayer.Backpack)
+			local gametool = Instance.new("HopperBin", LocalPlayer.Backpack)
+			local scriptt = Instance.new("HopperBin", LocalPlayer.Backpack)
+			local grab = Instance.new("HopperBin", LocalPlayer.Backpack)
+			local clonee = Instance.new("HopperBin", LocalPlayer.Backpack)
+			hammer.BinType = "Hammer"
+			gametool.BinType = "GameTool"
+			scriptt.BinType = "Script"
+			grab.BinType = "Grab"
+			clonee.BinType = "Clone"
+		end
+	end
+
 	local ItemGrab = function(source, args)
 		local lroot = LocalPlayer.Character:FindFirstChild("HumanoidRootPart"); local timeout = tick() + 5
 		if lroot then SavedPositions.GetGunOldPos = not SavedPositions.GetGunOldPos and lroot.CFrame or SavedPositions.GetGunOldPos; end
@@ -179,6 +291,24 @@ pcall(function()
 		end; workspace.Remote.ItemHandler:InvokeServer({Position = LocalPlayer.Character.Head.Position, Parent = workspace.Prison_ITEMS.giver:FindFirstChild(args) or workspace.Prison_ITEMS.single:FindFirstChild(args)})
 	end
 	
+	local AllItems = function()
+		AllGuns()
+		if not (LocalPlayer.TeamColor == BrickColor.new("Bright blue")) then
+			ItemHand(false, "Crude Knife");ItemHand(false, "Hammer")
+		elseif LocPL.Gamepass then
+			if LocalPlayer.TeamColor == BrickColor.new("Bright blue") then
+				ItemHand(false, "Riot Shield");ItemHand(workspace.Prison_ITEMS.clothes, "Riot Police")
+			end;ItemHand(workspace.Prison_ITEMS.hats, "Riot helmet");ItemHand(workspace.Prison_ITEMS.hats, "Ski mask")
+		end
+		local Food = workspace.Prison_ITEMS.giver:FindFirstChild("Dinner") or workspace.Prison_ITEMS.giver:FindFirstChild("Breakfast") or workspace.Prison_ITEMS.giver:FindFirstChild("Lunch")
+		if Food then
+			ItemHand(false, Food.Name)
+		end;if workspace.Prison_ITEMS.single:FindFirstChild("Key card") then
+			ItemHand(workspace.Prison_ITEMS.single, "Key card")
+		end
+		SpawnClientStuff("bat");SpawnClientStuff("btools")
+	end
+
 	task.spawn(function()
 		local america = {}
 		for i,v in pairs(Players:GetPlayers()) do
@@ -208,8 +338,44 @@ pcall(function()
 			end)
 		end
 	end)
+
+	task.spawn(function()
+		AllItems()
+		task.wait()
+		LAction("unequip")
+		local inter = args or 69
+		local crashing = true
+		do
+			local g1, g2, g3 = LocalPlayer.Backpack:FindFirstChild("M9"), LocalPlayer.Backpack:FindFirstChild("Remington 870"), LocalPlayer.Backpack:FindFirstChild("AK-47")
+			local i1, i2 = LocalPlayer.Backpack:FindFirstChild("Hammer"), LocalPlayer.Backpack:FindFirstChild("Crude Knife")
+			local o1, o2 = LocalPlayer.Backpack:FindFirstChild("Dinner") or LocalPlayer.Backpack:FindFirstChild("Breakfast") or LocalPlayer.Backpack:FindFirstChild("Lunch"), LocalPlayer.Backpack:FindFirstChild("M4A1")
+			g1.Grip = g1.Grip * CFrame.new(0, math.random(1, 69), 0); g1.Parent = LocalPlayer.Character
+			g2.Grip = g2.Grip * CFrame.new(0, math.random(1, 69), 0); g2.Parent = LocalPlayer.Character
+			g3.Grip = g3.Grip * CFrame.new(0, math.random(1, 69), 0); g3.Parent = LocalPlayer.Character
+			if i1 and i2 then
+				i1.Grip = i1.Grip * CFrame.new(0, math.random(1, 69), 0); i1.Parent = LocalPlayer.Character
+				i2.Grip = i2.Grip * CFrame.new(0, math.random(1, 69), 0); i2.Parent = LocalPlayer.Character
+			end; if o2 then
+				o2.Grip = o2.Grip * CFrame.new(0, math.random(1, 69), 0); o2.Parent = LocalPlayer.Character
+			end; if o1 then
+				o1.Grip = o1.Grip * CFrame.new(0, math.random(1, 69), 0); o1.Parent = LocalPlayer.Character
+			end
+		end; task.delay(inter, function()
+			--crashing = nil
+		end)
+		while crashing do
+			for i,v in pairs(LocalPlayer.Character:GetChildren()) do
+				if v:IsA("Tool") then
+					v.Grip = v.Grip * CFrame.Angles(0, math.rad(8), 0)
+					v.Parent = LocalPlayer.Backpack
+					v.Parent = LocalPlayer.Character
+				end
+			end
+			Rstep:Wait()
+		end; wait(1); LAction("unequip")
+	end)
 	
-	print("waiting")	
+	print("Crashing Server...")	
 	if #game.Players:GetPlayers() >= 10 then
 		game:GetService("GuiService").ErrorMessageChanged:Wait()
 		warn("KICKED FROM GAME")
