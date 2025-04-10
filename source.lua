@@ -290,6 +290,20 @@ pcall(function()
 			return
 		end; workspace.Remote.ItemHandler:InvokeServer({Position = LocalPlayer.Character.Head.Position, Parent = workspace.Prison_ITEMS.giver:FindFirstChild(args) or workspace.Prison_ITEMS.single:FindFirstChild(args)})
 	end
+
+	local AllGuns = function()
+		if Settings.User.OldItemMethod then
+			Gun("AK-47")
+			Gun("Remington 870")
+		else
+			task.spawn(Gun, "AK-47")
+			task.spawn(Gun, "Remington 870")
+		end
+		Gun("M9")
+		if LocPL.Gamepass then
+			Gun("M4A1")
+		end; task.wait()
+	end
 	
 	local AllItems = function()
 		AllGuns()
