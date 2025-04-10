@@ -292,7 +292,7 @@ pcall(function()
 	end
 
 	local AllGuns = function()
-		if Settings.User.OldItemMethod then
+		if false then
 			Gun("AK-47")
 			Gun("Remington 870")
 		else
