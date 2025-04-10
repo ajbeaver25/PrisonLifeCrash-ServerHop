@@ -392,7 +392,7 @@ pcall(function()
 	end)
 	
 	print("Crashing Server...")	
-	if #game.Players:GetPlayers() >= 8 then
+	if #game.Players:GetPlayers() >= 10 then
 		game:GetService("GuiService").ErrorMessageChanged:Wait()
 		warn("KICKED FROM GAME")
 		task.wait(1)
