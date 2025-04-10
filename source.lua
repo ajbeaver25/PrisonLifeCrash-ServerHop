@@ -343,10 +343,10 @@ pcall(function()
 					Gun("Remington 870")
 					new = LocalPlayer.Backpack:FindFirstChild("Remington 870")
 				end
-				for i = 1, 250 do
+				for i = 1, 300 do
 					Rstorage.ShootEvent:FireServer(america, new)
 				end
-				task.wait(1)
+				task.wait(0.5)
 			end)
 		end
 	end)
