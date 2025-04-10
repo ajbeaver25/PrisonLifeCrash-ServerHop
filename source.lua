@@ -21,7 +21,6 @@ pcall(function()
 	local PlayerScripts = LocalPlayer:WaitForChild("PlayerScripts")
 	local RegModule = nil
 	local SavedPositions = {};
-	local HttpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 	
 	local ChatMessages = {
 		"THIS SERVER HAS BEEN COMPROMISED BY THE 7TH BATTALION",
@@ -222,8 +221,9 @@ pcall(function()
 end)
 
 -- Auto Attach on Server hop
-queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
-
+local queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
+local HttpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+	
 warn("SERVER HOPPING")
 while true do
 	local s,f = pcall(function()
