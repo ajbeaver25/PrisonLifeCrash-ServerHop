@@ -386,6 +386,10 @@ pcall(function()
 			end)
 		end
 	end)
+
+	task.delay(180, function()
+		LocalPlayer:Kick("Rejoin")
+	end)
 	
 	print("Crashing Server...")	
 	if #game.Players:GetPlayers() >= 5 then
