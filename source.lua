@@ -217,15 +217,15 @@ pcall(function()
 		end
 	end)
 
-	print("waiting")
-	if #game.Players:GetPlayers() >= 10 then
+	print("waiting")	
+		if #game.Players:GetPlayers() >= 10 then
+			game:GetService("GuiService").ErrorMessageChanged:Connect(function()
+		    -- Code to run when you are disconnected
+			warn("KICKED FROM GAME")
+		end)
+			
 		task.wait(80)
 	end
-
-	game:GetService("GuiService").ErrorMessageChanged:Connect(function()
-	    -- Code to run when you are disconnected
-		warn("KICKED FROM GAME")
-	end)
 end)
 
 warn("SERVER HOPPING")
