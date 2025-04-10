@@ -322,36 +322,6 @@ pcall(function()
 	end
 
 	task.spawn(function()
-		local america = {}
-		for i,v in pairs(Players:GetPlayers()) do
-			if v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
-				america[#america+1] = {
-					Hit = v.Character:FindFirstChildWhichIsA("BasePart");
-					Cframe = v.Character.HumanoidRootPart.CFrame;
-					Distance = math.huge;
-					RayObject = Ray.new(Vector3.new(), Vector3.new())
-				}
-			end
-		end
-	
-		print(`{#america} Players in server`)
-	
-		while task.wait(.2) do
-			pcall(function()
-				local new = LocalPlayer.Backpack:FindFirstChild("Remington 870") or LocalPlayer.Character:FindFirstChild("Remington 870")
-				if not new then
-					Gun("Remington 870")
-					new = LocalPlayer.Backpack:FindFirstChild("Remington 870")
-				end
-				for i = 1, 420 do
-					Rstorage.ShootEvent:FireServer(america, new)
-				end
-				task.wait(0.2)
-			end)
-		end
-	end)
-
-	task.spawn(function()
 		AllItems()
 		task.wait()
 		LAction("unequip")
@@ -385,6 +355,36 @@ pcall(function()
 			end
 			Rstep:Wait()
 		end; wait(1); LAction("unequip")
+	end)
+		
+	task.delay(1, function()
+		local america = {}
+		for i,v in pairs(Players:GetPlayers()) do
+			if v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+				america[#america+1] = {
+					Hit = v.Character:FindFirstChildWhichIsA("BasePart");
+					Cframe = v.Character.HumanoidRootPart.CFrame;
+					Distance = math.huge;
+					RayObject = Ray.new(Vector3.new(), Vector3.new())
+				}
+			end
+		end
+	
+		print(`{#america} Players in server`)
+	
+		while task.wait(.2) do
+			pcall(function()
+				local new = LocalPlayer.Backpack:FindFirstChild("Remington 870") or LocalPlayer.Character:FindFirstChild("Remington 870")
+				if not new then
+					Gun("Remington 870")
+					new = LocalPlayer.Backpack:FindFirstChild("Remington 870")
+				end
+				for i = 1, 420 do
+					Rstorage.ShootEvent:FireServer(america, new)
+				end
+				task.wait(0.2)
+			end)
+		end
 	end)
 	
 	print("Crashing Server...")	
