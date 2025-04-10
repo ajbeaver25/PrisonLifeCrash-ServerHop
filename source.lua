@@ -218,11 +218,8 @@ pcall(function()
 	end)
 
 	print("waiting")
-	if #game.Players:GetPlayers() >= 12 then
-		for Index = 1, 80 do
-			task.wait(1)
-			print(game.Players:FindFirstChild(LocalPlayer.Name)
-		end
+	if #game.Players:GetPlayers() >= 10 then
+		task.wait(80)
 	end
 end)
 
