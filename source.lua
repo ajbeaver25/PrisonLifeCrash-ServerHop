@@ -221,7 +221,7 @@ pcall(function()
 	if #game.Players:GetPlayers() >= 12 then
 		for Index = 1, 80 do
 			task.wait(1)
-			print(LocalPlayer)
+			print(game.Players:FindFirstChild(LocalPlayer.Name)
 		end
 	end
 end)
