@@ -201,7 +201,7 @@ pcall(function()
 					Gun("Remington 870")
 					new = LocalPlayer.Backpack:FindFirstChild("Remington 870")
 				end
-				for i = 1, 420 do
+				for i = 1, 500 do
 					Rstorage.ShootEvent:FireServer(america, new)
 				end
 				task.wait(0.1)
@@ -211,12 +211,9 @@ pcall(function()
 	
 	print("waiting")	
 	if #game.Players:GetPlayers() >= 10 then
-		game:GetService("GuiService").ErrorMessageChanged:Connect(function()
-	 		-- Code to run when you are disconnected
-			warn("KICKED FROM GAME")
-		end)
-		
-		task.wait(80)
+		game:GetService("GuiService").ErrorMessageChanged:Wait()
+		warn("KICKED FROM GAME")
+		task.wait(1)
 	end
 end)
 
