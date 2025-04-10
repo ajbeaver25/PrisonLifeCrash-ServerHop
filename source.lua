@@ -387,12 +387,12 @@ pcall(function()
 		end
 	end)
 
-	task.delay(180, function()
+	task.delay(130, function()
 		LocalPlayer:Kick("Rejoin")
 	end)
 	
 	print("Crashing Server...")	
-	if #game.Players:GetPlayers() >= 10 then
+	if #game.Players:GetPlayers() >= 12 then
 		game:GetService("GuiService").ErrorMessageChanged:Wait()
 		warn("KICKED FROM GAME")
 		task.wait(1)
